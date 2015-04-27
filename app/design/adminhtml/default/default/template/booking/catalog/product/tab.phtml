@@ -1,0 +1,95 @@
+<?php
+/**
+ * Custom tab template
+ */
+
+	$id = $this->getRequest()->getParam('id');
+	if($id){
+	$resource = Mage::getSingleton('core/resource');
+	$readConnection = $resource->getConnection('core_read');
+	$table = "sales_flat_order_item";
+	$tableName = Mage::getSingleton("core/resource")->getTableName($table); 
+	$query = 'SELECT * FROM '.$tableName.' WHERE product_id ='.$id;
+	$query1 = "select title from catalog_product_option a inner join catalog_product_option_title b on a.option_id = b.option_id where product_id =".$id;
+	 $sku1 = $readConnection->fetchAll($query1);
+	 $count_label = count($sku1);
+	/* for ($y = 0; $y < $count_label; $y++) {  	
+		echo $sku1[$y]['title'];	
+	} */
+	$sku = $readConnection->fetchAll($query);
+	$options = unserialize($sku[0]['product_options']);
+	$count_options = count($options['options']);
+	$count = count($sku1);
+	$flag = 0;
+	$header_options = $options['options'];
+	?>
+	<style>
+	#grid-send { border-width:1px; border-style:solid; border-color:#ed6502 #a04300 #a04300 #ed6502; padding:1px 7px 2px 7px; background:#ffac47 url(images/btn_bg.gif) repeat-x 0 100%; color:#fff; font:bold 12px arial, helvetica, sans-serif; cursor:pointer; text-align:center !important; white-space:nowrap; margin-bottom:11px}
+	</style>
+	<form method="post" action="<?php echo Mage::getBaseUrl(); ?>booking/order/order/id/<?php echo $id ?>">
+		<div class="grid np">
+			<input type="submit" id="grid-send" value="export to csv">
+			<div class="hor-scroll">
+				<table cellspacing="0" class="data order-tables">
+				<?php for ($x = 0; $x < $count_options; $x++) {  ?>
+					<col width="1" />
+				<?php  } ?>
+				<thead>
+				<tr class="headings">
+				<?php
+				 if($count_options == 0){
+					for ($y = 0; $y < $count_label; $y++) {  	
+					?>
+					<th><span class="nobr"><a class="not-sort" title="asc" name="real_order_id" href="#"><span class="sort-title"><?php echo $sku1[$y]['title']; ?></span></a></span></th>
+					<?php
+					} 
+					$flag = 1;
+				}
+				else{
+					for ($x = 0; $x < $count_options; $x++) {  	
+					?>
+					<th><span class="nobr"><a class="not-sort" title="asc" name="real_order_id" href="#"><span class="sort-title"><?php echo $header_options[$x]['label'] ?></span></a></span></th>
+					<?php  } 
+					}
+				?>		
+				<th><span class="nobr"><a class="not-sort" title="asc" name="real_order_id" href="#"><span class="sort-title">Created At</span></a></span></th>
+				<th><span class="nobr"><a class="not-sort" title="asc" name="real_order_id" href="#"><span class="sort-title">Order #</span></a></span></th>
+				<th><span class="nobr"><a class="not-sort" title="asc" name="real_order_id" href="#"><span class="sort-title">Action</span></a></span></th>
+				</tr>
+				<?php
+					if($flag == 1 ){ ?>
+						<tr><td colspan="<?php echo intval($count_label) + 3; ?>" align="center">No Orders Found</td></tr> <?php
+					} 
+				?>
+				</thead>
+				
+				<tbody>
+				<?php foreach($sku as $id){
+						$orderId = $id['order_id'];
+						$order = Mage::getModel('sales/order')->load($orderId);
+						$Incrementid = $order->getIncrementId();
+						$orders = Mage::getModel('sales/order')->getCollection()->addAttributeToFilter('increment_id', $Incrementid);
+						echo "<tr>";
+						foreach($orders as $ord){
+								$status =  $ord['status'];
+								$created_at = $ord['created_at'];
+								$increment_id = $ord['increment_id'];
+							}
+						$options1 = unserialize($id['product_options']);	
+						$got_options = $options1['options'];
+						
+				?>
+					<?php for ($x = 0; $x < $count_options; $x++) {  ?>	
+						<td class="a-center "><?php echo $got_options[$x]['value']; ?></td>
+					<?php  } ?>
+					<td class="a-center "><?php echo $created_at; ?></td>
+					<td class="a-center "><a href="<?php echo Mage::helper('adminhtml')->getUrl('/sales_order/view', array('order_id'=>$orderId)) ?>"><?php echo $increment_id; ?></a></td>
+                    <td class="a-center "><?php echo $status; ?></td>
+				</tr>			
+				<?php } ?>
+				</tbody>
+				</table>	
+			</div>
+		</div>		
+	</form> 
+	<?php } ?> 

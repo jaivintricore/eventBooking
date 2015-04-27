@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Event_Booking>
+            <version>0.1.0</version>
+        </Event_Booking>
+    </modules>
+    <global>
+        <blocks>
+            <booking>
+                <class>Event_Booking_Block</class>
+            </booking>
+            <adminhtml>
+				<rewrite>
+					<edit_tabs>Event_Booking_Adminhtml_Block_Catalog_Product_Edit_Tabs</edit_tabs>
+				</rewrite>
+			</adminhtml>	
+        </blocks>
+        
+        <models>
+            <booking>
+                <class>Event_Booking_Model</class>
+            </booking>
+        </models>
+    </global>
+    
+    <admin>
+	<routers>
+	  <booking>
+	    <use>admin</use>
+		<args>
+		  <module>Event_Booking</module>
+		  <frontName>booking</frontName>
+		</args>
+	  </booking>
+	</routers>
+  </admin>
+    
+    
+    <adminhtml>
+		<!--<routers>
+            <booking>
+                <use>admin</use>
+                <args>
+                    <module>Event_Booking</module>
+                    <frontName>booking</frontName>
+                </args>
+            </booking>
+        </routers> -->
+       <layout>
+            <updates>
+                <booking>
+                    <file>booking.xml</file>
+                </booking>
+            </updates>
+        </layout>
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <event_save_product_data>
+                        <type>singleton</type>
+                        <class>booking/observer</class>
+                        <method>saveProductTabData</method>
+                    </event_save_product_data>
+                </observers>
+            </catalog_product_save_after>
+        </events>
+    </adminhtml>
+</config>
