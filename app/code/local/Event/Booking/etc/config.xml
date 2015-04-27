@@ -8,6 +8,7 @@
     </modules>
     <global>
         <blocks>
+			
             <booking>
                 <class>Event_Booking_Block</class>
             </booking>
@@ -17,6 +18,8 @@
 				</rewrite>
 			</adminhtml>	
         </blocks>
+        
+        
         
         <models>
             <booking>
