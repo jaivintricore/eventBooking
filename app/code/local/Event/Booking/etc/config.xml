@@ -50,6 +50,7 @@
             </updates>
         </layout>
         <events>
+			
             <catalog_product_save_after>
                 <observers>
                     <event_save_product_data>
