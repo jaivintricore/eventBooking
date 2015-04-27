@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0.2"?>
 <config>
 	
     <modules>
@@ -42,15 +42,6 @@
     
     
     <adminhtml>
-		<!--<routers>
-            <booking>
-                <use>admin</use>
-                <args>
-                    <module>Event_Booking</module>
-                    <frontName>booking</frontName>
-                </args>
-            </booking>
-        </routers> -->
        <layout>
             <updates>
                 <booking>
@@ -65,6 +56,15 @@
                         <type>singleton</type>
                         <class>booking/observer</class>
                         <method>saveProductTabData</method>
+                    </event_save_product_data>
+                </observers>
+            </catalog_product_save_after>
+            <catalog_product_save_after>
+                <observers>
+                    <event_save_product_data tag="">
+                        <type>singleton</type>
+                        <class>booking/observer</class>
+                        <method>khkhjjhkjjhkj</method>
                     </event_save_product_data>
                 </observers>
             </catalog_product_save_after>
