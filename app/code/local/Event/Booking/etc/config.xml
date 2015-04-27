@@ -1,5 +1,6 @@
-<?xml version="2.0"?>
+<?xml version="1.0.2"?>
 <config>
+	
     <modules>
         <Event_Booking>
             <version>0.1.0</version>
@@ -7,6 +8,7 @@
     </modules>
     <global>
         <blocks>
+			
             <booking>
                 <class>Event_Booking_Block</class>
             </booking>
@@ -16,6 +18,8 @@
 				</rewrite>
 			</adminhtml>	
         </blocks>
+        
+        
         
         <models>
             <booking>
@@ -53,6 +57,15 @@
                         <type>singleton</type>
                         <class>booking/observer</class>
                         <method>saveProductTabData</method>
+                    </event_save_product_data>
+                </observers>
+            </catalog_product_save_after>
+            <catalog_product_save_after>
+                <observers>
+                    <event_save_product_data tag="">
+                        <type>singleton</type>
+                        <class>booking/observer</class>
+                        <method>khkhjjhkjjhkj</method>
                     </event_save_product_data>
                 </observers>
             </catalog_product_save_after>
