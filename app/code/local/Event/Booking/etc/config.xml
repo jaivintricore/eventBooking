@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="2.0"?>
 <config>
     <modules>
         <Event_Booking>
@@ -38,15 +38,6 @@
     
     
     <adminhtml>
-		<!--<routers>
-            <booking>
-                <use>admin</use>
-                <args>
-                    <module>Event_Booking</module>
-                    <frontName>booking</frontName>
-                </args>
-            </booking>
-        </routers> -->
        <layout>
             <updates>
                 <booking>
@@ -55,6 +46,7 @@
             </updates>
         </layout>
         <events>
+			
             <catalog_product_save_after>
                 <observers>
                     <event_save_product_data>
